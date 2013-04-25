@@ -101,6 +101,12 @@ class DebateDocSet:
                     text = text.translate(string.maketrans("", ""), '"')
                     turn.append("%s" % (text))
                     self._add_to_turn_data(corpus_info, row, turn_data)
+            doc = DebateDoc(speaker, self._next_id, turn_text, **turn_data)
+            if corpus_info['test_corpus']:
+                self._test.append(doc)
+            else:
+                self._train.append(doc)
+            self._next_id += 1
 
     def _new_turn_data(self, corpus_info, line):
         turn_data = {}
@@ -143,6 +149,8 @@ class DebateDocSet:
 
 
 def main(argv):
+    if len(argv) < 2:
+        print("USAGE: python format.py output_name corpus_info_file")
     ds = DebateDocSet()
     outdir = argv[0]
     argv = argv[1:]
