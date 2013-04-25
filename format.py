@@ -76,37 +76,38 @@ class DebateDocSet:
                     continue
                 if n == 1:
                     last_speaker = speaker
-                    turn = [text]
+                    turn = self._new_turn(text)
                     turn_data = self._new_turn_data(corpus_info, row)
                     continue
                 # Normal cases
                 if speaker != last_speaker:
-                    turn_text = ' '.join(turn).lower()
-                    doc = DebateDoc(last_speaker, self._next_id, turn_text,
-                                    **turn_data)
-                    if corpus_info['test_corpus']:
-                        self._test.append(doc)
-                    else:
-                        self._train.append(doc)
-                    self._next_id += 1
+                    self._add_doc(last_speaker, turn, turn_data,
+                                  corpus_info['test_corpus'])
                     last_speaker = speaker
-                    # Turns in the presidential debate corpus start with NAME:
-                    # the next four lines remove that
-                    if re.match(r'^\w+:.*', text):
-                        turn = [text.split(':')[1].strip()]
-                    else:
-                        turn = [text]
+                    turn = self._new_turn(text)
                     turn_data = self._new_turn_data(corpus_info, row)
                 else:
                     text = text.translate(string.maketrans("", ""), '"')
                     turn.append("%s" % (text))
                     self._add_to_turn_data(corpus_info, row, turn_data)
-            doc = DebateDoc(speaker, self._next_id, turn_text, **turn_data)
-            if corpus_info['test_corpus']:
-                self._test.append(doc)
-            else:
-                self._train.append(doc)
-            self._next_id += 1
+            self._add_doc(last_speaker, turn, turn_data,
+                          corpus_info['test_corpus'])
+
+    def _add_doc(self, speaker, turn, misc_data, test_corpus):
+        turn_text = ' '.join(turn).lower()
+        doc = DebateDoc(speaker, self._next_id, turn_text, **misc_data)
+        if test_corpus:
+            self._test.append(doc)
+        else:
+            self._train.append(doc)
+        self._next_id += 1
+
+    def _new_turn(self, text):
+        # Turns in the presidential debate corpus start with NAME:
+        # This removes those names.
+        if re.match(r'^\w+:.*', text):
+            return [text.split(':')[1].strip()]
+        return [text]
 
     def _new_turn_data(self, corpus_info, line):
         turn_data = {}
