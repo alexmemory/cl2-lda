@@ -1,0 +1,30 @@
+[
+    {
+        "fname": "corpora/oct3_coded_transcript_sync.csv",
+        "test_corpus": false,
+        "speaker_field": 2,
+        "text_field": 3,
+        "time":    {
+                        "start": 0,
+                        "stop": 1
+                    },
+        "misc": {
+                    "qtopic": 4,
+                    "topic": 5,
+                    "frame": 6,
+                    "tone": 7
+                }
+    },
+    {   
+        "fname": "corpora/presidential_debates_corpus/debates_1992_2004_2008_combined_cleaned.csv",
+        "test_corpus": true,
+        "speaker_field": 5,
+        "text_field": 4,
+        "misc": {
+                    "qtopic": 6,
+                    "topic": 7,
+                    "frame": 8,
+                    "tone": 9
+                }
+    }
+]
