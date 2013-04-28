@@ -36,3 +36,6 @@ nosetests.xml
 
 
 resources_symlink
+corpora
+data
+.DS_Store
