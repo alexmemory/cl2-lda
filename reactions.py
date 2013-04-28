@@ -9,8 +9,6 @@ def split_reactions_file(path_to_csv):
     - The political portion of the questionnaire
     """
     a = pandas.read_csv(path_to_csv)
-    #r2 = r.copy()
-    #r2.columns = [c.strip() for c in """
     a.columns = [c.strip() for c in """
     UserID
     Reaction
@@ -48,7 +46,6 @@ def split_reactions_file(path_to_csv):
     next
     """.split('\n') if not c.strip()=='']
 
-    #r3 = r2.reindex(columns=[c.strip() for c in """
     a = a.reindex(columns=[c.strip() for c in """
     UserID
     Time
@@ -88,6 +85,7 @@ def split_reactions_file(path_to_csv):
 
     a['Reaction_who'] = a.Reaction.str.split(':').str.get(0)
     a['Reaction_what'] = a.Reaction.str.split(':').str.get(1)
+    a['Time'] = pandas.to_datetime(a['Time'])
     r = a[['UserID','Time','Reaction_who','Reaction_what']]
 
     q = a[[c.strip() for c in """
