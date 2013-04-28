@@ -1,4 +1,4 @@
-import pandas
+import pandas as pd
 
 def split_reactions_file(path_to_csv):
     """Clean up and split the reactions file into separate tables
@@ -8,7 +8,7 @@ def split_reactions_file(path_to_csv):
     - The demographic portion of the questionnaire
     - The political portion of the questionnaire
     """
-    a = pandas.read_csv(path_to_csv)
+    a = pd.read_csv(path_to_csv)
     a.columns = [c.strip() for c in """
     UserID
     Reaction
@@ -85,7 +85,7 @@ def split_reactions_file(path_to_csv):
 
     a['Reaction_who'] = a.Reaction.str.split(':').str.get(0)
     a['Reaction_what'] = a.Reaction.str.split(':').str.get(1)
-    a['Time'] = pandas.to_datetime(a['Time'])
+    a['Time'] = pd.to_datetime(a['Time'])
     r = a[['UserID','Time','Reaction_who','Reaction_what']]
 
     q = a[[c.strip() for c in """
@@ -159,3 +159,31 @@ def split_reactions_file(path_to_csv):
     """.split('\n') if not c.strip()=='']]
 
     return {'reactions':r, 'questionnaire':q, 'quest_demographic':d, 'quest_political':p}
+
+def link_reactions_to_transcript(path_to_reactions_file, path_to_transcript_file, truncate_after='2:33'):
+    """Return a table with reactions data next to transcript entries
+    This will return a table with an entry for each reaction and columns
+    from the reaction data, plus the most recent statement from the transcript.
+    It removes reactions before the debate stated (about 1/2 hour) and after
+    the debate ended (about 1/2 hour).
+    """
+
+    parts = split_reactions_file(path_to_reactions_file)
+    r = parts['reactions']
+
+    r['start'] = r.Time.apply(lambda t: pd.datetime.time(t)) # A col to merge on
+
+    c = pd.read_csv(path_to_transcript_file)
+    c['start'] = pd.to_datetime(c["Sync'd start"]).apply(lambda t: pd.datetime.time(t))
+
+    m = c.append(r) # merge on 'state' col
+    m = m.sort(columns='start') # sort on 'state'
+    m = m.fillna(method='ffill') # give last transcript info to subsequent reactions
+
+    m = m.dropna() # remove reactions without transcript info
+
+    m = m[m.start < pd.datetime.time(pd.to_datetime(truncate_after))] # remove reactions after the debate
+
+    m['turn'] = (m.Speaker.shift(1) != m.Speaker).astype(int).cumsum() # identify turns
+
+    return m
