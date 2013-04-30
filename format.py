@@ -82,7 +82,7 @@ class DebateDocSet:
                 # Normal cases
                 if speaker != last_speaker:
                     self._add_doc(last_speaker, turn, turn_data,
-                                  corpus_info['test_corpus'])
+                                  corpus_info['unlabeled_corpus'])
                     last_speaker = speaker
                     turn = self._new_turn(text)
                     turn_data = self._new_turn_data(corpus_info, row)
@@ -91,7 +91,7 @@ class DebateDocSet:
                     turn.append("%s" % (text))
                     self._add_to_turn_data(corpus_info, row, turn_data)
             self._add_doc(last_speaker, turn, turn_data,
-                          corpus_info['test_corpus'])
+                          corpus_info['unlabeled_corpus'])
 
     def _add_doc(self, speaker, turn, misc_data, test_corpus):
         turn_text = ' '.join(turn).lower()
@@ -137,10 +137,10 @@ class DebateDocSet:
                 f.write(doc.text)
 
     def dump_doc_data(self, fname):
-        with open("%s.train" % (fname), 'w') as f:
+        with open("%s.labeled" % (fname), 'w') as f:
             for doc in self._train:
                 print(doc, file=f)
-        with open("%s.test" % (fname), 'w') as f:
+        with open("%s.unlabeled" % (fname), 'w') as f:
             for doc in self._test:
                 print(doc, file=f)
 
