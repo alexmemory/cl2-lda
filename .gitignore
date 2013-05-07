@@ -39,3 +39,4 @@ resources_symlink
 corpora
 data
 .DS_Store
+tmp.*
