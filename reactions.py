@@ -175,6 +175,7 @@ def link_reactions_to_transcript(path_to_reactions_file, path_to_transcript_file
 
     c = pd.read_csv(path_to_transcript_file)
     c['start'] = pd.to_datetime(c["Sync'd start"]).apply(lambda t: pd.datetime.time(t))
+    c['statement'] = range(len(c))
 
     m = c.append(r) # merge on 'state' col
     m = m.sort(columns='start') # sort on 'state'
