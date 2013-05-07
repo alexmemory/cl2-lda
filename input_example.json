@@ -1,7 +1,7 @@
 [
     {
         "fname": "corpora/oct3_coded_transcript_sync.csv",
-        "labeled_corpus": false,
+        "unlabeled_corpus": false,
         "speaker_field": 2,
         "text_field": 3,
         "time":    {
