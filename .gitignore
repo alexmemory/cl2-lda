@@ -40,3 +40,4 @@ corpora
 data
 .DS_Store
 tmp.*
+mallet
