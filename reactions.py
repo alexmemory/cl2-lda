@@ -126,6 +126,7 @@ def split_reactions_file(path_to_csv):
     q = q.drop_duplicates()
 
     d = q[[c.strip() for c in """
+    UserID
     gender_16
     age_17
     family_income_18
@@ -136,6 +137,7 @@ def split_reactions_file(path_to_csv):
     """.split('\n') if not c.strip()=='']]
 
     p = q[[c.strip() for c in """
+    UserID
     party_1
     political_views_2
     candidate_choice_3
@@ -186,5 +188,6 @@ def link_reactions_to_transcript(path_to_reactions_file, path_to_transcript_file
     m = m[m.start < pd.datetime.time(pd.to_datetime(truncate_after))] # remove reactions after the debate
 
     m['turn'] = (m.Speaker.shift(1) != m.Speaker).astype(int).cumsum() # identify turns
+    m['Speaker_name'] = m.Speaker.apply(lambda s: {0:'Moderator', 1:'Romney', 2:'Obama'}[s])
 
     return m
