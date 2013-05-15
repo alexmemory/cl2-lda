@@ -1,0 +1,77 @@
+
+[Boydstun et. al, 2013] labels each phrase in the October 4th, 2012 debate corpus with a topic ID. Each ID corresponds to a significant topic in the debate, such as "Defense" or "Labor, Employment, and Immigration." Unlike the topics found by LDA, these are hand-selected, with a single topic per phrase instead of a distribution over topics.
+
+We are interested in whether using these hand-labeled topics, as opposed to the topics discovered using LDA, will improve or worsen performance predicting users' reactions to the debate.
+
+Since we are working at the turn level, not the phrase level, we assimilate all topic IDs within a turn into a distribution over topics for that turn.
+
+As before, each labeled topic present in the corpus is a feature. For a given turn, the value of that feature is the fraction of phrases within the turn labeled with that topic.
+
+Once again we evaluate classification accuracy on three tasks, or labels: Whether a turn generates more or less than the median number of reactions per second, whether a turn generates more 'agree' or 'disagree' reactions, and whether a turn generates more or less than the median number of spin or dodge reactions per second.
+
+Classification is done with Mallet, using Decision Tree, Maximum Entropy, and Naive Bayes classifiers. We perform 10-fold cross-validation using the 197 turns to calculate test accuracy and standard deviation:
+
+\begin{table}[H]
+\begin{centering}
+\begin{tabular}{ l | l | l }
+Classifier & Obama voters & Romney voters \\
+\hline
+DecTree & \textbf{0.695} (.131) &  \textbf{.719} (.150) \\
+MaxEnt & \textbf{0.498} (.146) &  \textbf{.386} (.129) \\
+Naive & \textbf{0.454} (.142) &  \textbf{.386} (.130) \\
+\end{tabular}
+\caption{Task 1 Accuracy and StdDev}
+\end{centering}
+\end{table}
+
+\begin{table}[H]
+\begin{centering}
+\begin{tabular}{ l | l | l }
+Classifier & Obama voters & Romney voters \\
+\hline
+DecTree & \textbf{0.519} (.095) &  \textbf{.455} (.090) \\
+MaxEnt & \textbf{0.577} (.092) &  \textbf{.562} (.141) \\
+Naive & \textbf{0.589} (.093) &  \textbf{.567} (.144) \\
+\end{tabular}
+\caption{Task 2 Accuracy and StdDev}
+\end{centering}
+\end{table}
+
+\begin{table}[H]
+\begin{centering}
+\begin{tabular}{ l | l | l }
+Classifier & Obama voters & Romney voters \\
+\hline
+DecTree & \textbf{0.803} (.106) &  \textbf{.805} (.150) \\
+MaxEnt & \textbf{0.823} (.122) &  \textbf{.813} (.154) \\
+Naive & \textbf{0.823} (.122) &  \textbf{.813} (.154) \\
+\end{tabular}
+\caption{Task 3 Accuracy and StdDev}
+\label{tab:task3boydstun}
+\end{centering}
+\end{table}
+
+For each classification task, we also keep track of the features that the Mallet Decision Tree learner selects most frequently for having the highest information gain. We can then look up the corresponding topics for the most valuable features.
+
+\begin{table*}[H]
+\begin{centering}
+\begin{tabular}{| l | l | l |}
+\hline
+  & Best feature (Obama) & Best Feature (Romney) \\
+\hline
+Task 1 & labor/employment/immigration & government operations \\
+	    & education & macroeconomics \\
+	    & health & education \\
+	    \hline
+Task 2 & labor/employment/immigration & labor/employment/immigration \\
+	    & government operations & education \\
+	    & social welfare & macroeconomics  \\
+	    \hline
+Task 3 & candidate personal information & health \\
+	    & social welfare & government operations \\
+	    & labor/employment/immigration & candidate personal information \\
+	    \hline
+\end{tabular}
+\caption{3 Features with highest information gain}
+\end{centering}
+\end{table*}
