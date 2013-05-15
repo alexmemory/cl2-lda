@@ -48,8 +48,13 @@ We also plot confusion matrices using the best-performing classifier for both us
 0 & Obama:Agree & 10 & Moderator:Spin \\
 8 & Romney:Spin & 11 & Moderator:Dodge \\
 2 & Romney:Agree & 5 & Moderator:Disagree \\
-
 \end{tabular}
 \caption{Topic code key}
 \end{centering}
 \end{table}
+
+As expected, using topic-based features in addition to user features improves classification accuracy. The maximum entropy classifier shows the greatest improvement, increasing from $45.2\%$ accuracy to $51.7\%$ accuracy.
+
+This is an interesting result, since the maximum entropy classifier is the one classifier that makes no independence assumptions between the features. The increase in accuracy suggests that it does a better job of integrating the user features with the topic features. For instance, the maximum entropy classifier might be more capable of classifying the reaction of a user who indicates a certain topic is more important to him during a turn in which that topic is present.
+
+From the confusion matrices, one can see that the majority of predictions fall into labels 0 and 2, corresponding to "Obama:Agree" and "Romney:Agree." In Figure \ref{fig:useronlyconfusion}, labels for "Romney:Disagree" are often confused with labels for "Obama:Agree." This makes sense, since a user who disagrees with Romney most likely agrees with Obama. Including topic features results in more predictions of labels 3 and 1, "Obama:Disagree" and "Romney:Disagree" (Figure \ref{fig:boydstunconfusion}).
