@@ -1,3 +1,53 @@
 %!TEX root =  cl2-lda.tex
 
-Talking about the results from the ngrams baseline.  \emph{not sure if we need to introduce the ngrams baseline earlier in the document as well, e.g., the problem statement, but it surely needs to have results here...}
+Predicting users' reactions to the debate based on n-grams from the text of the each turn taken by the candidates is a simple approach, and we are interested to see how well the topic-based methods compare to it in terms of performance.
+
+On all the tasks, we predict the responses to turns using Decision Tree, Maximum Entropy and Naive Bayes classifiers; we used the implementations of these classifiers from NLTK\textbf{ref}.  We measure our final accuracy on all tasks with 10-fold cross validation.  
+
+To extract n-gram features from the transcripts of the turns, we began by splitting the text into tokens using the English tokenizer from NLTK.  We then removed punctuation, numbers and stop-words; and then converted all n-grams to lower-case.  Finally, we produced a single feature for each unique n-gram in each turn indicating is presence (not the count of tokens for that n-gram).  
+
+For our evaluation, we considered either unigrams or bigrams as features.  To determine the number of n-gram features to use to avoid overfitting, we varied their number while evaluating mean accuracy during repeated random sub-sampling validation.  To select which n-grams to include among the features, we selected the n-grams with the most frequent unigrams first.
+
+In Table~\ref{tab:task1unigrams} we see that on \textbf{Task 1} the decision tree performed best over all, while on \textbf{Task 2}, naive Bayes performed very well when predicting reactions of Obama voters but not for Romney voters, cf. Table~\ref{tab:task2unigrams}.  Finally, we see in~\ref{tab:task3unigrams} that on \textbf{Task 3}, maximum entropy performed best over all while naive bayes continued to struggle at predicting reactions of Romney voters.
+
+\begin{table}[H]
+\begin{centering}
+\begin{tabular}{ l | l | l }
+Classifier & Obama voters & Romney voters \\
+\hline
+DecTree & \textbf{0.84} (0.07) &  \textbf{0.83} (0.17) \\
+MaxEnt & \textbf{0.78} (.16) &  \textbf{.84} (.16) \\
+Naive & \textbf{0.75} (.09) &  \textbf{.77} (.15) \\
+\end{tabular}
+\caption{Task 1 (unigram features): Accuracy and StdDev}
+\label{tab:task1unigrams}
+\end{centering}
+\end{table}
+
+\begin{table}[H]
+\begin{centering}
+\begin{tabular}{ l | l | l }
+Classifier & Obama voters & Romney voters \\
+\hline
+DecTree & \textbf{0.74} (0.22) &  \textbf{0.83} (0.12) \\
+MaxEnt & \textbf{0.76} (.16) &  \textbf{.80} (.06) \\
+Naive & \textbf{0.87} (.12) &  \textbf{.50} (.12) \\
+\end{tabular}
+\caption{Task 2 (unigram features): Accuracy and StdDev}
+\label{tab:task2unigrams}
+\end{centering}
+\end{table}
+
+\begin{table}[H]
+\begin{centering}
+\begin{tabular}{ l | l | l }
+Classifier & Obama voters & Romney voters \\
+\hline
+DecTree & \textbf{0.83} (0.14) &  \textbf{0.80} (0.15) \\
+MaxEnt & \textbf{0.86} (.09) &  \textbf{.84} (.13) \\
+Naive & \textbf{0.81} (.11) &  \textbf{.49} (.23) \\
+\end{tabular}
+\caption{Task 3 (unigram features): Accuracy and StdDev}
+\label{tab:task3unigrams}
+\end{centering}
+\end{table}
