@@ -29,9 +29,9 @@ Naive & \textbf{0.57} (.17) &  \textbf{.67} (.15) \\
 	\label{fig:ngramstask1hyperparam}
 \end{figure}
 
-First we consider results with unigram features. In Table~\ref{tab:task1unigrams} we see that on \textbf{Task 1} we see that all three classifiers performed similarly.  This task is challenging for the classifiers, for example with the Naive Bayes model we see in Fig.~\ref{fig:ngramstask1hyperparam} that test accuracy quickly reaches a limit as we consider much more than a few hundred unigram features and the model quickly overfits due to the relatively high number of features per training example.
+First we consider results with unigram features. In Table~\ref{tab:task1unigrams} we see on that \textbf{Task 1} all three classifiers performed similarly.  This task is challenging for the classifiers, for example with the Naive Bayes model we see in Fig.~\ref{fig:ngramstask1hyperparam} that test accuracy quickly reaches a limit as we consider any more than a few hundred unigram features and the model quickly overfits due to the relatively high numbers of features per training example.
 
-In contrast, the models are substantially more successful on \textbf{Task 2}.  Interestingly the Naive Bayes model performed very well when predicting reactions of Obama voters, cf.~\ref{fig:ngramstask2hyperparam} -- the most informative features where \emph{Romney} and \emph{Governor}, perhaps because the words are more often said by their chosen candidate than the opponent.  But, it did not perform well for Romney voters, cf. Table~\ref{tab:task2unigrams} -- here the most informative feature was \emph{idea}, which doesn't seem to have as much clear meaning as the name of an opponent. 
+In contrast, the models are substantially more successful on \textbf{Task 2}.  Interestingly the Naive Bayes model performed very well when predicting reactions of Obama voters, cf. Fig.~\ref{fig:ngramstask2hyperparam} -- the most informative features where \emph{Romney} and \emph{Governor}, perhaps because the words are more often said by their chosen candidate than the opponent.  But, it did not perform well for Romney voters, cf. Table~\ref{tab:task2unigrams} -- here the most informative feature was \emph{idea}, which doesn't seem to have as much clear meaning as the name of an opponent. 
 
 \begin{figure}[]
 	\centering
@@ -63,7 +63,7 @@ Something that may help to explain this difference is an interesting difference 
 	\label{fig:ngramsbalanceoba}
 \end{figure}
 
-Now contrast this with the corresponding distribution of Romney supporter reactions in Fig.~\ref{fig:ngramsbalancerom}.  The patterns that emerges is that the mode in distribution representing strong disagreement is gone from the Republican supporters and the mode representing strong support is higher (in relative but not absolute numbers, because the number of Obama supporters outnumber the Romney supporters).  As a consequence, there is a greater bias in the training sets for the Naive Bayes classifier on Task 2, which -- in combination with a small training size over-all -- can lead to a tendency to predict the common class regardless of the features.  Another reason for the difference in performance may be the difference in numbers of Obama supporters and Romney supporters in the data set, such that there is a clearer signal of consensus over topics (here, unigrams) that Obama supporters react to, and a tendency to over-fit.  Indeed, we see in Fig.~\ref{fig:ngramstask2hyperparamrom} that the Naive Bayes model over fits easily as we increase the number of unigram features.
+Now contrast this with the corresponding distribution of Romney supporter reactions in Fig.~\ref{fig:ngramsbalancerom}.  The patterns that emerges is that the modes in the distribution representing strongest disagreement is absent from the Republican supporter reactions and the mode representing strong support is higher (in relative but not absolute numbers, because the number of Obama supporters outnumber the Romney supporters).  As a consequence, there is a greater bias in the training sets for the Naive Bayes classifier on Task 2, which -- in combination with a small training size over-all -- can lead to a tendency to predict the common class regardless of the features.  Another reason for the difference in performance may be the difference in numbers of Obama supporters and Romney supporters in the data set, such that there is a clearer signal of consensus over topics (here, unigrams) that Obama supporters react to, and a tendency to over-fit.  Indeed, we see in Fig.~\ref{fig:ngramstask2hyperparamrom} that the Naive Bayes model over fits easily as we increase the number of unigram features.
 
 \begin{figure}[]
 	\centering
@@ -79,7 +79,7 @@ Now contrast this with the corresponding distribution of Romney supporter reacti
 	\label{fig:ngramstask2hyperparamrom}
 \end{figure}
 
-Continuing, we see in~\ref{tab:task3unigrams} that on \textbf{Task 3}, Maximum Entropy performed best over all while Naive Bayes continued to struggle at predicting reactions of Romney voters.
+Continuing, we see in Table~\ref{tab:task3unigrams} that on \textbf{Task 3}, Maximum Entropy performed best over all while Naive Bayes continued to struggle at predicting reactions of Romney voters.
 
 \begin{table}[]
 \begin{centering}
@@ -95,7 +95,7 @@ Naive & \textbf{0.81} (.11) &  \textbf{.49} (.23) \\
 \end{centering}
 \end{table}
 
-Bigram features consistently underperform the unigram features, which is not surprising since there were very training examples over all, permitting over-fitting if we increase the number of bigram features, and the models are not smoothed which is aggravated by the use of bigram features rather than unigram features.  Table~\ref{tab:task1bigrams} reveals poor performance on \textbf{Task 1} for Obama supporters by all classifiers; interestingly, Romney supporters' reactions were more easily predicted in this setting.  The most informative bigram feature to predict strong reactions from Romney supporters on \textbf{Task 1} was \emph{cut taxes}, which is easily understood as a meaningful collocation in general and for this group in particular. The most informative bigram to predict low reactions is \emph{Governor Romney}, perhaps because this is most often said by the moderator or the other candidate rather than Romney himself.  \textbf{Task 2} and \textbf{Task 3} continued to perform poorly over all with bigram features, cf. Table~\ref{tab:task2bigrams} and Table~\ref{tab:task3bigrams}.
+Bigram features consistently underperform the unigram features, which is not surprising since there were very few training examples over all, permitting over-fitting if we increase the number of bigram features, and the models are not smoothed which is aggravated by the use of bigram features rather than unigram features.  Table~\ref{tab:task1bigrams} reveals poor performance on \textbf{Task 1} for Obama supporters by all classifiers; interestingly, Romney supporters' reactions were more easily predicted in this setting.  The most informative bigram feature to predict strong reactions from Romney supporters on \textbf{Task 1} was \emph{cut taxes}, which is easily understood as a meaningful collocation in general and for this group in particular. The most informative bigram to predict low reactions is \emph{Governor Romney}, perhaps because this is most often said by the moderator or the other candidate rather than Romney himself.  \textbf{Task 2} and \textbf{Task 3} continued to perform poorly over all with bigram features, cf. Table~\ref{tab:task2bigrams} and Table~\ref{tab:task3bigrams}.
 
 \begin{table}[H]
 \begin{centering}
