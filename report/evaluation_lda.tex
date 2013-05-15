@@ -19,7 +19,7 @@ This makes the results of classification using these topics as features all the 
 Tables \ref{tab:task1lda} through \ref{tab:task3lda} show the average accuracy and standard deviation of each classifier on the test data.
 The data was partitioned into training and test data with a 90:10 split and 10-fold cross validation.
 
-Surprisingly, using LDA topic proportions actually performed \textit{better} for task 1 and task 2 with the Decision Tree and Maximum Entropy classifiers (Tables \ref{tab:task1lda} and \ref{tab:task2lda}).
+Surprisingly, using LDA topic proportions actually performed \textit{better} for Task 1 and Task 2 with the Decision Tree and Maximum Entropy classifiers (Tables \ref{tab:task1lda} and \ref{tab:task2lda}) than the coded topic features (.
 Although it was more than adequate for task 1 and task 2, it fell short of the coded topic classifiers for task three (Table \ref{tab:task3lda}).
 
 The results with Naive Bayes are perhaps a little more revealing.
@@ -121,8 +121,8 @@ small \textbf{percent} \ \ \ \ plan pay \textbf{class} america \textbf{raise} bu
 Classifier & Obama voters & Romney voters \\
 \hline
 DecTree & \textbf{0.71} (0.05) &  \textbf{0.71} (0.07) \\
-MaxEnt & \textbf{0.70} (.06) &  \textbf{.68} (.05) \\
-Naive & \textbf{0.20} (.05) &  \textbf{.68} (.04) \\
+MaxEnt & \textbf{0.70} (.06) &  \textbf{0.68} (.05) \\
+Naive & \textbf{0.20} (.05) &  \textbf{0.20} (.04) \\
 \end{tabular}
 \caption{Task 1 (lda features): Accuracy and StdDev}
 \label{tab:task1lda}
