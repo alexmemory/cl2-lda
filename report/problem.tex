@@ -3,9 +3,9 @@
 \subsection{High Level Task}
 
 Our task is to predict various types of user reactions given features generated from the debate text.
-The simplest possible model one could make to predict user reactions would use unigram features, so we decided to use this as a baseline.
+The simplest possible model one could make to predict user reactions would use n-gram features, so we decided to use this as a baseline.
 From there we noted that each statement in the debate corpora are annotated with the topic that best describes it.
-We thought that this could potentially distill the information carried by the unigrams into a much smaller number of features, making for a smaller and more elegant model.
+We thought that this could potentially distill the information carried by the n-grams into a much smaller number of features, making for a smaller and more elegant model.
 For this reason, we chose to follow our baseline model with a model that used the coded topics as features.
 It is slow and labor-intensive to have people manually code debates, however, so it would be preferable to have an automatic solution.
 We decided to use Latent Dirichlet Allocation (LDA) to automatically generate topics and used the topic proportion for each debate turn in place of the  coded topic features.
@@ -15,33 +15,33 @@ We decided to compare the performance of each implementation on three tasks whic
 
 \subsubsection{Task 1: Predicting Overall Reactions}
 
-The purpose of this task is to evaluate how well-suited the features in each model is to predict the overall rate of user reactions for a certain group of people.
+The purpose of \textbf{Task 1} is to evaluate how well-suited the features in each model are to predict the overall rate of user reactions for a certain group of people.
 To do this, we calculated the number of reactions for each turn in the debate and divided by the length of the turn in seconds.
-Each turn in the debate was then labeled with either a 1 if the reactions per second for that turn was greater than median for all turns or 0 otherwise.
+Each turn in the debate was then labeled with either a 1 if the reactions per second for that turn was greater than the median for all turns or 0 otherwise.
 This was done once for reactions from democrats and a second time for reactions from republicans.
 
 \subsubsection{Task 2: Predicting Agree Reactions}
 
-The purpose of this task is to evaluate how well-suited the features in each model is to predict if a certain group of people will agree or disagree with what the current speaker is saying.
+The purpose of \textbf{Task 2} is to evaluate how well-suited the features in each model is to predict if a certain group of people will agree or disagree with what the current speaker is saying.
 To do this, we calculated the ratio reactions agreeing with the current speaker to the reactions disagreeing with the current speaker for each turn in the debate.
 Each turn in the debate was then labeled with either a 1 if the ratio of agrees to disagrees for that turn was greater than median for all turns or 0 otherwise.
 This was done once for reactions from democrats and a second time for reactions from republicans.
 
 \subsubsection{Task 3: Predicting Spin and Dodge Reactions}
 
-The purpose of this task is to evaluate how well-suited the features in each model is to predict if a certain group of people will judge the current speaker to be spinning or dodging.
-To do this, we calculated the number of spin and dodge reactions for current speaker for each turn in the debate and divided by the length of the turn in seconds.
+The purpose of \textbf{Task 3} is to evaluate how well-suited the features in each model is to predict if a certain group of people will judge the current speaker to be spinning or dodging.
+To do this, we calculated the number of spin and dodge reactions for the current speaker for each turn in the debate and divided by the length of the turn in seconds.
 Each turn in the debate was then labeled with either a 1 if spins and dodges per second for that turn was greater than median for all turns or 0 otherwise.
 This was done once for reactions from democrats and a second time for reactions from republicans.
 
 
 \subsection{Expected Outcomes}
 
-We expected the unigram classifier to perform distressingly well.
-It was less clear to us whether the coded topics would be as useful for classification as unigrams.
+We expected the n-gram classifier to perform distressingly well.
+It was less clear to us whether the coded topics would be as useful for classification as n-grams.
 On the on hand, it is possible that they could have distilled most of the useful information needed to classify user reactions.
-On the other, it is also quite possible that only included coded topics would leave out important information available at the word level (e.g., the candidate's word choice doesn't jive with a group of users).
-Like the coded topics, we weren't sure how LDA topic features would do in relation to unigrams but we were reasonably sure that they would perform worse than the coded topics.
+It is also quite possible that the included coded topics would leave out important information available at the word level (e.g., the candidate's word choice doesn't jive with a group of users).
+Like the coded topics, we weren't sure how LDA topic features would do in relation to n-grams but we were reasonably sure that they would perform worse than the coded topics.
 Our hope was that they would only perform marginally worse, because the trade off for less coding gruntwork might be worth a small performance loss.
 We had reason to believe that some of the more complicated topic models, especially SITS would yield better topics for the debate corpora, and thus make for better features for our classifiers.
 SITS would theoretically be especially useful for predicting dodge reactions because in addition to topics, it would provide an indicator of when the topic of conversation had been shifted.
