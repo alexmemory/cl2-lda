@@ -1,1 +1,16 @@
-Discussion of LDA results here...
+
+\subsubsection{Lessons}
+
+With the exception of Naive Bayes classifiers, it seems to be the case that simple LDA topics work well enough for predicting reactions to use them instead of coded topics. 
+
+\subsubsection{Future Directions}
+
+The obvious future directions from here are to do what we orginally said would be our next step and try out more complex topic models.
+It would be interesting to see if you get better topics and/or predictions if they are learned in conjunction with a model like sLDA.
+It would also be interesting to be agnostic about the number of topics with a nonparametric model like the hierarchical dirichlet process (HDP).
+Finally, it would be very interesting to see if topic shift indicators inferred by the SITS model would improve dodge reaction predicitons.
+
+Another direction this could go would be to predict reactions for more specific problems.
+This is easily doable with the infrastructure provided by format.py, database.py, svmlitegen.py in our source directory.
+These files allow the user to specify any combination of user attributes in order to narrow the reactions we track.
+
