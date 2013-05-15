@@ -1,5 +1,5 @@
 """
-usage: python svmlitegen.py <reaction type> <binned|ratio|identity> <user attributes (e.g., "party=democrat")
+usage: python svmlitegen.py
 """
 from __future__ import division
 import csv
@@ -15,6 +15,8 @@ DEBATE_DATA_FNAME = "oct3.labeled"
 
 
 COUNT_QUERY = 'SELECT Count(*) FROM reactions,users WHERE reactions.userid=users.userid AND reactions.reaction="%s" %s AND reactions.time BETWEEN "%s" AND "%s"'
+COUNT_QUERY_ALL = 'SELECT Count(*) FROM reactions,users WHERE reactions.userid=users.userid %s AND reactions.time BETWEEN "%s" AND "%s"'
+BARE_COUNT_QUERY = 'SELECT Count(*) FROM reactions,users WHERE reactions.userid=users.userid AND reactions.time BETWEEN "%s" AND "%s"'
 
 
 def strptime(x, y):
@@ -28,7 +30,10 @@ def svmlite_lines(react_type, user_attrs, label_fn, times, feats_list):
     else:
         sql_attrs = ''
     for (start, end), feats in zip(times, feats_list):
-        query = COUNT_QUERY % (react_type, sql_attrs, start, end)
+        if react_type == "all":
+            query = COUNT_QUERY_ALL % (sql_attrs, start, end)
+        else:
+            query = COUNT_QUERY % (react_type, sql_attrs, start, end)
         num_reacts = database.fetch(query)[0][0]
         feat_str = ' '.join(["%s:%s" % (idx, feat) for idx, feat in feats
             + [('100', str((strptime(end, '%H:%M:%S') - strptime(start, '%H:%M:%S')).seconds))]])
@@ -37,10 +42,93 @@ def svmlite_lines(react_type, user_attrs, label_fn, times, feats_list):
 
 def svmlite_lines_wlabels(labels, times, feats_list):
     #for (start, end), feats in zip(times, feats_list):
-    for (start, end), label, feats in zip(times, labels, feats_list):
-        feat_str = ' '.join(["%s:%s" % (idx, feat) for idx, feat in feats
-            + [('100', str((strptime(end, '%H:%M:%S') - strptime(start, '%H:%M:%S')).seconds))]])
+    for label, feats in zip(labels, feats_list):
+        #len_feat = ' 100:%d' % ((strptime(end, '%H:%M:%S') - strptime(start, '%H:%M:%S')).seconds)
+        len_feat = ''
+        feat_str = ' '.join(["%s:%s" % (idx, feat) for idx, feat in feats]) + len_feat
         yield "%s %s\n" % (label, feat_str)
+
+
+def counts_per_turn(react_type, user_attrs, per_second=True, curr_speaker=True):
+    speakers = {'0': 'Moderator', '1': 'Romney', '2': 'Obama'}
+    if user_attrs:
+        user_attr_sql = ' AND ' + ' AND '.join(['users.%s="%s"' % x
+                                  for x in user_attrs])
+    else:
+        user_attr_sql = ''
+    with open(DEBATE_DATA_FNAME) as debate_data:
+        reader = csv.reader(debate_data, delimiter=',', quotechar='"')
+        react_counts = []
+        for row in reader:
+            query = BARE_COUNT_QUERY % (row[2], row[3])
+            query += user_attr_sql
+            if curr_speaker:
+                print row
+                query += ' AND reactions.reaction="%s:%s"' % (speakers[row[1]], react_type)
+            react_count = database.fetch(query)[0][0]
+            react_counts.append(react_count)
+        return react_counts
+
+
+def task_1(party):
+    with open('task1%s.train' % (party), 'w') as f:
+        attrs = [('candidate', party)]
+        counts = counts_per_turn(None, attrs, curr_speaker=False)
+        median = np.median(counts)
+        labels = [1 if x > median else 0 for x in counts]
+        feats = lda_topic_feats()
+        for line in svmlite_lines_wlabels(labels, None, feats):
+            f.write(line + '\n')
+
+
+def task_2(party):
+    with open('task2%s.train' % (party), 'w') as f:
+        attrs = [('candidate', party)]
+        agree_counts = counts_per_turn('Agree', attrs, per_second=False)
+        disagree_counts = counts_per_turn('Disagree', attrs, per_second=False)
+        ratios = [x / (y + 1) for x, y in zip(agree_counts, disagree_counts)]
+        median = np.median(ratios)
+        labels = [1 if x > median else 0 for x in ratios]
+        feats = lda_topic_feats()
+        for line in svmlite_lines_wlabels(labels, None, feats):
+            f.write(line + '\n')
+
+
+def task_3(party):
+    with open('task3%s.train' % (party), 'w') as f:
+        attrs = [('candidate', party)]
+        spin_counts = counts_per_turn('Spin', attrs)
+        dodge_counts = counts_per_turn('Dodge', attrs)
+        totals = [x + y for x, y in zip(spin_counts, dodge_counts)]
+        median = np.median(totals)
+        labels = [1 if x > median else 0 for x in totals]
+        feats = lda_topic_feats()
+        for line in svmlite_lines_wlabels(labels, None, feats):
+            f.write(line + '\n')
+
+
+def binned_labels(react_type, user_attrs, times):
+    if user_attrs:
+        sql_attrs = ' AND ' + ' AND '.join(['users.%s="%s"' % x
+                                  for x in user_attrs])
+    else:
+        sql_attrs = ''
+    react_counts = []
+    for start, end in times:
+        if react_type == "all":
+            query = COUNT_QUERY_ALL % (sql_attrs, start, end)
+        else:
+            query = COUNT_QUERY % (react_type.split(":")[0] + ":Agree",
+                               sql_attrs, start, end)
+        #print query
+        st = strptime(start, '%H:%M:%S')
+        nd = strptime(end, '%H:%M:%S')
+        turn_time = (nd - st).seconds + 1
+        num_reacts = database.fetch(query)[0][0]
+        #print num_reacts
+        react_counts.append(num_reacts / turn_time)
+    median = np.median(react_counts)
+    return [1 if x > median else 0 for x in react_counts]
 
 
 def ratio_labels(react_type, user_attrs, times):
@@ -106,35 +194,14 @@ def svmgen_test():
 
 
 def main(argv):
-    if len(argv) < 2:
-        print "Not enough args"
-        sys.exit(1)
-    react_type = argv[0]
-    label_type = argv[1]
-    user_attrs = [tuple(x.split('=')) for x in argv[2:]]
-    if label_type == 'binned':
-        label_fn = binned_label
-    elif label_type == 'identity':
-        label_fn = identity_label
-    elif label_type == 'ratio':
-        times = list(turn_times())
-        labels = ratio_labels(react_type, user_attrs, times)
-        with open('ratio.train', 'w') as train:
-            for line in svmlite_lines_wlabels(labels, times, lda_topic_feats()):
-                train.write(line)
-        sys.exit(0)
-    lines = svmlite_lines(react_type, user_attrs, label_fn, turn_times(),
-                          lda_topic_feats())
-    file_name = '_'.join(argv)
-    lines = list(lines)
-    split = int(len(lines))
-    with open(file_name + ".train", 'w') as train:
-        for line_num in range(split):
-            train.write(lines[line_num])
-    with open(file_name + ".test", 'w') as test:
-        for line_num in range(split, len(lines)):
-            test.write(lines[line_num])
+    task_1('obama')
+    task_1('romney')
+    task_2('obama')
+    task_2('romney')
+    task_3('obama')
+    task_3('romney')
 
 
 if __name__ == "__main__":
     main(sys.argv[1:])
+
