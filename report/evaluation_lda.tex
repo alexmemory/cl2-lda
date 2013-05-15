@@ -16,10 +16,19 @@ Only five of the remaining topics are marginally coherent (if you squint).
 The remaining two are essentially incoherent.
 This makes the results of classification using these topics as features all the more surprising.
 
+Tables \ref{tab:task1lda} through \ref{tab:task3lda} show the average accuracy and standard deviation of each classifier on the test data.
+The data was partitioned into training and test data with a 90:10 split and 10-fold cross validation.
+
 Surprisingly, using LDA topic proportions actually performed \textit{better} for task 1 and task 2 with the Decision Tree and Maximum Entropy classifiers (Tables \ref{tab:task1lda} and \ref{tab:task2lda}).
-Possibly even more perplexingly, the Naive Bayes classifier performed abyssmally at all three tasks with these features.
 Although it was more than adequate for task 1 and task 2, it fell short of the coded topic classifiers for task three (Table \ref{tab:task3lda}).
 
+The results with Naive Bayes are perhaps a little more revealing.
+LDA features performed abyssmally in the Naive Bayes classifier.
+Given the fact that the other classifiers performed so well, there must be an explanation.
+Decision trees split the dataset on an attribute that gives them the maximum information gain (in this case, this was topic 0, which I claimed was incoherent) so it has a mechanism using features in order of importance.
+Additionally, maximum entropy classifiers try to be as agnostic as possible about any attributes that aren't particularly helpful for classification.
+Naive Bayes, however will attempt to use the probability of each feature given a class label to compute the posterior probability of that class.
+It seems as though a select few of the LDA topics are very useful for classification and the rest detract substantially from the overall accuracy.
 
 \begin{figure*}
 \begin{flushleft}
