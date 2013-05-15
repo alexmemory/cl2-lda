@@ -14,45 +14,45 @@ Once again we evaluate classification accuracy on three tasks, or labels: Whethe
 
 Classification is done with Mallet, using Decision Tree, Maximum Entropy, and Naive Bayes classifiers. We perform 10-fold cross-validation using the 197 turns to calculate test accuracy and standard deviation:
 
-\begin{table*}[H]
+\begin{table}[H]
 \begin{centering}
 \begin{tabular}{ l | l | l }
-Classifier & Acc/StdDev (Obama) & Acc/StdDev (Romney) \\
+Classifier & Obama voters & Romney voters \\
 \hline
-Decision Tree & \textbf{0.695} (.131) &  \textbf{.719} (.150) \\
-Maximum Entropy & \textbf{0.498} (.146) &  \textbf{.386} (.129) \\
-Naive Bayes & \textbf{0.454} (.142) &  \textbf{.386} (.130) \\
+DecTree & \textbf{0.695} (.131) &  \textbf{.719} (.150) \\
+MaxEnt & \textbf{0.498} (.146) &  \textbf{.386} (.129) \\
+Naive & \textbf{0.454} (.142) &  \textbf{.386} (.130) \\
 \end{tabular}
-\caption{\textbf{Task 1}: Number of reactions}
+\caption{Task 1 Accuracy and StdDev}
 \end{centering}
-\end{table*}
+\end{table}
 
-\begin{table*}[H]
+\begin{table}[H]
 \begin{centering}
 \begin{tabular}{ l | l | l }
-Classifier & Acc/StdDev (Obama) & Acc/StdDev (Romney) \\
+Classifier & Obama voters & Romney voters \\
 \hline
-Decision Tree & \textbf{0.519} (.095) &  \textbf{.455} (.090) \\
-Maximum Entropy & \textbf{0.577} (.092) &  \textbf{.562} (.141) \\
-Naive Bayes & \textbf{0.589} (.093) &  \textbf{.567} (.144) \\
+DecTree & \textbf{0.519} (.095) &  \textbf{.455} (.090) \\
+MaxEnt & \textbf{0.577} (.092) &  \textbf{.562} (.141) \\
+Naive & \textbf{0.589} (.093) &  \textbf{.567} (.144) \\
 \end{tabular}
-\caption{\textbf{Task 2}: Majority agreement}
+\caption{Task 2 Accuracy and StdDev}
 \end{centering}
-\end{table*}
+\end{table}
 
-\begin{table*}[H]
+\begin{table}[H]
 \begin{centering}
 \begin{tabular}{ l | l | l }
-Classifier & Acc/StdDev (Obama) & Acc/StdDev (Romney) \\
+Classifier & Obama voters & Romney voters \\
 \hline
-Decision Tree & \textbf{0.803} (.106) &  \textbf{.805} (.150) \\
-Maximum Entropy & \textbf{0.823} (.122) &  \textbf{.813} (.154) \\
-Naive Bayes & \textbf{0.823} (.122) &  \textbf{.813} (.154) \\
+DecTree & \textbf{0.803} (.106) &  \textbf{.805} (.150) \\
+MaxEnt & \textbf{0.823} (.122) &  \textbf{.813} (.154) \\
+Naive & \textbf{0.823} (.122) &  \textbf{.813} (.154) \\
 \end{tabular}
-\caption{\textbf{Task 3}: Number of spin and dodge reactions}
+\caption{Task 3 Accuracy and StdDev}
 \label{tab:task3boydstun}
 \end{centering}
-\end{table*}
+\end{table}
 
 For each classification task, we also keep track of the features that the Mallet Decision Tree learner selects most frequently for having the highest information gain. We can then look up the corresponding topics for the most valuable features.
 
@@ -105,25 +105,25 @@ Naive Bayes & \textbf{.443} (.020) & \textbf{0.481} (.012) &  \textbf{.460} (.01
 
 We also plot confusion matrices using the best-performing classifier for both user features alone and user features combined with topic features.
 
-\begin{figure*}[H]
+\begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.5]{Figures/no_topic_features_confusion.png}
+	\includegraphics[scale=0.35]{Figures/no_topic_features_confusion.png}
 	\caption{Confusion Matrix: Classification with user features only}
 	\label{fig:useronlyconfusion}
-\end{figure*}
+\end{figure}
 
-\begin{figure*}[H]
+\begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.5]{Figures/boydstun_confusion.png}
+	\includegraphics[scale=0.35]{Figures/boydstun_confusion.png}
 	\caption{Confusion Matrix: Classification with user and topic features}
 	\label{fig:boydstunconfusion}
-\end{figure*}
+\end{figure}
 
 
-\begin{table*}[H]
+\begin{table}[H]
 \begin{centering}
 \begin{tabular}{ l | l | l | l }
- Topic code & Topic description & Topic code & Topic description \\
+ Code & Topic & Code & Topic \\
 \hline
 4 & Moderator:Agree & 9 & Romney:Dodge \\
 6 & Obama:Spin & 3 & Romney:Disagree \\
@@ -135,4 +135,4 @@ We also plot confusion matrices using the best-performing classifier for both us
 \end{tabular}
 \caption{Topic code key}
 \end{centering}
-\end{table*}
+\end{table}
