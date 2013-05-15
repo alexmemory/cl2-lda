@@ -1,10 +1,4 @@
-\documentclass[12pt]{article}
-\usepackage{lingmacros}
-\usepackage{tree-dvips}
-\usepackage{graphicx}
-\usepackage{float}
 
-\begin{document}
 
 \subsection{Predicting Reactions with Labeled Topics}
 
@@ -20,7 +14,7 @@ Once again we evaluate classification accuracy on three tasks, or labels: Whethe
 
 Classification is done with Mallet, using Decision Tree, Maximum Entropy, and Naive Bayes classifiers. We perform 10-fold cross-validation using the 197 turns to calculate test accuracy and standard deviation:
 
-\begin{table}[H]
+\begin{table*}[H]
 \begin{centering}
 \begin{tabular}{ l | l | l }
 Classifier & Acc/StdDev (Obama) & Acc/StdDev (Romney) \\
@@ -31,9 +25,9 @@ Naive Bayes & \textbf{0.454} (.142) &  \textbf{.386} (.130) \\
 \end{tabular}
 \caption{\textbf{Task 1}: Number of reactions}
 \end{centering}
-\end{table}
+\end{table*}
 
-\begin{table}[H]
+\begin{table*}[H]
 \begin{centering}
 \begin{tabular}{ l | l | l }
 Classifier & Acc/StdDev (Obama) & Acc/StdDev (Romney) \\
@@ -44,9 +38,9 @@ Naive Bayes & \textbf{0.589} (.093) &  \textbf{.567} (.144) \\
 \end{tabular}
 \caption{\textbf{Task 2}: Majority agreement}
 \end{centering}
-\end{table}
+\end{table*}
 
-\begin{table}[H]
+\begin{table*}[H]
 \begin{centering}
 \begin{tabular}{ l | l | l }
 Classifier & Acc/StdDev (Obama) & Acc/StdDev (Romney) \\
@@ -58,11 +52,11 @@ Naive Bayes & \textbf{0.823} (.122) &  \textbf{.813} (.154) \\
 \caption{\textbf{Task 3}: Number of spin and dodge reactions}
 \label{tab:task3boydstun}
 \end{centering}
-\end{table}
+\end{table*}
 
 For each classification task, we also keep track of the features that the Mallet Decision Tree learner selects most frequently for having the highest information gain. We can then look up the corresponding topics for the most valuable features.
 
-\begin{table}[H]
+\begin{table*}[H]
 \begin{centering}
 \begin{tabular}{| l | l | l |}
 \hline
@@ -83,7 +77,7 @@ Task 3 & candidate personal information & health \\
 \end{tabular}
 \caption{3 Features with highest information gain}
 \end{centering}
-\end{table}
+\end{table*}
 
 
 \subsection{User Reactions}
@@ -96,7 +90,7 @@ However, since we are now working at the individual level, we can also use featu
 
 We are primarily interested in 1.) how well we can predict user reactions given user features and topic features, and 2.) how much topic features contribute to classification accuracy. Topic features are determined based on the turn in which the reaction occurs. We use features derived from both LDA topics and the Boydstun labeled topics. Labels are the 12 possible user reactions ("$Obama|Romney|Moderator : Agree|Disagree|Spin|Dodge$"). We use 10,000 reactions for 10-fold cross-validation.
 
-\begin{table}[H]
+\begin{table*}[H]
 \begin{centering}
 \begin{tabular}{ l | l | l | l }
 Classifier & User features only & User + LDA & User + Boydstun \\
@@ -107,26 +101,26 @@ Naive Bayes & \textbf{.443} (.020) & \textbf{0.481} (.012) &  \textbf{.460} (.01
 \end{tabular}
 \caption{User reaction classification: accuracy and standard deviation}
 \end{centering}
-\end{table}
+\end{table*}
 
 We also plot confusion matrices using the best-performing classifier for both user features alone and user features combined with topic features.
 
-\begin{figure}[H]
+\begin{figure*}[H]
 	\centering
 	\includegraphics[scale=0.5]{Figures/no_topic_features_confusion.png}
 	\caption{Confusion Matrix: Classification with user features only}
 	\label{fig:useronlyconfusion}
-\end{figure}
+\end{figure*}
 
-\begin{figure}[H]
+\begin{figure*}[H]
 	\centering
 	\includegraphics[scale=0.5]{Figures/boydstun_confusion.png}
 	\caption{Confusion Matrix: Classification with user and topic features}
 	\label{fig:boydstunconfusion}
-\end{figure}
+\end{figure*}
 
 
-\begin{table}[H]
+\begin{table*}[H]
 \begin{centering}
 \begin{tabular}{ l | l | l | l }
  Topic code & Topic description & Topic code & Topic description \\
@@ -141,8 +135,4 @@ We also plot confusion matrices using the best-performing classifier for both us
 \end{tabular}
 \caption{Topic code key}
 \end{centering}
-\end{table}
-
-
-
-\end{document}
+\end{table*}
