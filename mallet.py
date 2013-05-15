@@ -46,7 +46,7 @@ class Mallet:
         command = self.mallet_directory + "bin/mallet train-classifier " + \
                   "--input " + self.mallet_examples_file + " " + \
                   "--cross-validation " + str(self.xval_k) + " --trainer " + self.trainer + \
-                  " --trainer MaxEnt --trainer NaiveBayes --verbosity 3"
+                  " --trainer MaxEnt --trainer NaiveBayes --verbosity 4"
         self.__run_command(command)
 
 
