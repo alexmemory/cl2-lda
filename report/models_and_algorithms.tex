@@ -1,3 +1,5 @@
 %!TEX root =  cl2-lda.tex
 
-Say what algorithms we used, e.g. lda and naive bayes.
+For the task of predicting user reactions given features generated from the debate text, we use different algorithms for feature generation and for prediction.  To generate topic features from text, we use LDA~\cite{blei_latent_2003} as implemented by~\cite{mccallum_mallet:_2002}.  To predict the user reactions we use decision tree, maximum entropy and naive Bayes classifiers as implemented in~\cite{mccallum_mallet:_2002} or~\cite{bird_nltk:_2006}.
+
+We parameterize each algorithm for each of our tasks and describe how we choose the particular the parameter settings in Section~\ref{sec:evaluation}.

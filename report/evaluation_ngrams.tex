@@ -2,13 +2,13 @@
 
 Predicting users' reactions to the debate based on n-grams from the text of the each turn taken by the candidates is a simple approach, and we are interested to see how well the topic-based methods compare to it in terms of performance.
 
-On all the tasks, we predict the responses to turns using Decision Tree, Maximum Entropy and Naive Bayes classifiers; we used the implementations of these classifiers from NLTK\textbf{ref}.  We measure our final accuracy on all tasks with 10-fold cross validation.  
+On all the tasks, we predict the responses to turns using Decision Tree, Maximum Entropy and Naive Bayes classifiers; we used the implementations of these classifiers from NLTK~\cite{bird_nltk:_2006}.  We measure our final accuracy on all tasks with 10-fold cross validation.  
 
 To extract n-gram features from the transcripts of the turns, we began by splitting the text into tokens using the English tokenizer from NLTK.  We then removed punctuation, numbers and stop-words; and then converted all n-grams to lower-case.  Finally, we produced a single feature for each unique n-gram in each turn indicating is presence (not the count of tokens for that n-gram).  
 
-For our evaluation, we considered either unigrams or bigrams as features.  To determine the number of n-gram features to use to avoid overfitting, we varied their number while evaluating mean accuracy during repeated random sub-sampling validation.  To select which n-grams to include among the features, we selected the n-grams with the most frequent unigrams first.
+For our evaluation, we considered either unigrams or bigrams as features.  To determine the number of n-gram features to use to avoid overfitting, we varied their number while evaluating mean accuracy during repeated random sub-sampling validation.  To select which n-grams to include among the features, we selected the most frequent n-grams first.
 
-First we consider results with unigram features. In Table~\ref{tab:task1unigrams} we see that on \textbf{Task 1} the decision tree performed best over all, while on \textbf{Task 2}, naive Bayes performed very well when predicting reactions of Obama voters but not for Romney voters, cf. Table~\ref{tab:task2unigrams}.  And, we see in~\ref{tab:task3unigrams} that on \textbf{Task 3}, maximum entropy performed best over all while naive bayes continued to struggle at predicting reactions of Romney voters.
+First we consider results with unigram features. In Table~\ref{tab:task1unigrams} we see that on \textbf{Task 1} the Decision Tree performed best over all, while on \textbf{Task 2}, Naive Bayes performed very well when predicting reactions of Obama voters but not for Romney voters, cf. Table~\ref{tab:task2unigrams}.  And, we see in~\ref{tab:task3unigrams} that on \textbf{Task 3}, Maximum Entropy performed best over all while Naive Bayes continued to struggle at predicting reactions of Romney voters.
 
 \begin{table}[H]
 \begin{centering}
