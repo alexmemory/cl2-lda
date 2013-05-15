@@ -1,3 +1,127 @@
 %!TEX root =  cl2-lda.tex
 
-Mallet LDA eval stuff here...
+\begin{figure*}
+\begin{flushleft}
+\tablefirsthead{}
+\tablehead{}
+\tabletail{}
+\tablelasttail{}
+\begin{supertabular}{|m{4.8087597in}|m{1.1906599in}|}
+\hline
+{\selectlanguage{english} Top Terms} &
+{\selectlanguage{english} Topic}\\\hline
+{\selectlanguage{english} president america country states united didn made today respect \ difference american don fact
+mistake make policy decisions question kids decision} &
+{\selectlanguage{english} Incoherent}\\\hline
+{\selectlanguage{english} campaign people country foreign american fact issues town lobbyists house congress tough white
+honor running campaigns interested pledge john character} &
+{\selectlanguage{english} Campaigning (?)}\\\hline
+{\selectlanguage{english} \textbf{health care plan insurance medicare costs }cost government give companies
+\textbf{system} buy seniors choice program lower billion \textbf{private} provide \textbf{premiums}} &
+{\selectlanguage{english} Healthcare}\\\hline
+{\selectlanguage{english} \textbf{drugs} don act \textbf{law} congress rights bill \textbf{crime} line \textbf{drug}
+\textbf{police} \textbf{protect} patriot border \textbf{enforcement} legislation citizens fact enterprise
+\textbf{fighting}} &
+{\selectlanguage{english} Law Enforcement}\\\hline
+{\selectlanguage{english} ve people don make ll time back work things years put lot good country america important
+american president point thing} &
+{\selectlanguage{english} Incoherent}\\\hline
+{\selectlanguage{english} \textbf{iraq} \textbf{afghanistan} senator \textbf{troops} \textbf{strategy} obama
+\textbf{pakistan} \textbf{russia} \textbf{war} \textbf{georgia} \textbf{qaeda} \textbf{al} mccain \textbf{military}
+situation states understand russians \textbf{defeat} united} &
+{\selectlanguage{english} Foreign Conflict}\\\hline
+{\selectlanguage{english} \textbf{jobs} \textbf{trade} free agreement \textbf{job} country fair \textbf{industries}
+\textbf{workers} \textbf{overseas} \textbf{business} standards base defense agreements wage century \textbf{pay}
+minimum growing} &
+{\selectlanguage{english} Jobs}\\\hline
+{\selectlanguage{english} \textbf{governor} \textbf{romney} government \textbf{federal} \textbf{states} board approach
+\textbf{obamacare} repeal conditions fact reason replace difference \textbf{cost} military investments crisis
+opportunity \textbf{Massachusetts}} &
+{\selectlanguage{english} Health Insurance Reform (?)}\\\hline
+{\selectlanguage{english} \textbf{world} \textbf{war} \textbf{military} \textbf{troops} \textbf{national}
+\textbf{security} \textbf{forces} \textbf{army} peace russia europe \textbf{nuclear} \textbf{draft} general question
+\textbf{defense} \textbf{cold} union superpower democracy} &
+{\selectlanguage{english} Defense}\\\hline
+{\selectlanguage{english} \textbf{nuclear} \textbf{iran} \textbf{north} \textbf{korea} president \textbf{weapons}
+\textbf{talks} threat senator united mccain \textbf{proliferation} sanctions countries israel involved china table
+\ \ \ \ states ambassador} &
+{\selectlanguage{english} Nuclear Weapons}\\\hline
+{\selectlanguage{english} \textbf{education} \textbf{school} \textbf{schools} \textbf{child} money \textbf{children}
+\textbf{kids} america system job \textbf{teachers} state \textbf{public} abortion program funding college continue
+choice \ \ aids} &
+{\selectlanguage{english} Education}\\\hline
+{\selectlanguage{english} mr president \textbf{question} \textbf{senator} \textbf{minute} perot bush governor kerry
+\textbf{minutes} clinton seconds \textbf{answer} \textbf{audience} \textbf{tonight} \textbf{debate} \textbf{questions}
+presidential \ candidates sir} &
+{\selectlanguage{english} Debate Phrases}\\\hline
+{\selectlanguage{english} senator obama voted spending senate states united record party opposed constitution fought
+reform bill marriage friends times issue justice \ completely} &
+{\selectlanguage{english} Legislative Branch (?)}\\\hline
+{\selectlanguage{english} \textbf{iraq} \textbf{war} world \textbf{saddam} \textbf{hussein} plan troops \textbf{weapons}
+free opponent \ \ \ \ \textbf{bin} \textbf{osama} \textbf{laden} \textbf{terror} win wrong safe threat strong
+intelligence} &
+{\selectlanguage{english} Middle East / Terrorism}\\\hline
+{\selectlanguage{english} \textbf{energy} \textbf{oil} \textbf{nuclear} \textbf{fuel} percent \textbf{technology}
+\textbf{power} reduce stem united companies \textbf{coal} \textbf{drilling} \textbf{clean} \textbf{wind} states
+\textbf{solar} \textbf{science} mccain issue} &
+{\selectlanguage{english} Energy}\\\hline
+{\selectlanguage{english} congress people economic years mr government american governor economy clinton control growth
+spend social program change country interest programs jobs} &
+{\selectlanguage{english} Clinton Years Economy (?)}\\\hline
+{\selectlanguage{english} \textbf{tax} \textbf{taxes} \textbf{cut} \textbf{jobs} billion spending people \textbf{middle}
+small \textbf{percent} \ \ \ \ plan pay \textbf{class} america \textbf{raise} budget \textbf{business} money
+\textbf{income} deficit} &
+{\selectlanguage{english} Taxes}\\\hline
+{\selectlanguage{english} mccain sen senator obama crisis \textbf{economy} \textbf{street} \textbf{financial} question
+\textbf{banks} \textbf{wall} \textbf{policy} regulation \textbf{economic} homes americans tonight system package fix} &
+{\selectlanguage{english} Economy (?)}\\\hline
+{\selectlanguage{english} \textbf{children} \textbf{people} \textbf{women} \textbf{family} person \textbf{love} american
+\textbf{faith} \textbf{dream} \textbf{life} \textbf{values} great \textbf{woman} strong part \textbf{laughter}
+\textbf{god} \textbf{personal} \textbf{wife} \textbf{daughters}} &
+{\selectlanguage{english} Pathos}\\\hline
+\end{supertabular}
+\end{flushleft}
+\caption{LDA topics}
+\end{figure*}
+
+\begin{table}[H]
+\begin{centering}
+\begin{tabular}{ l | l | l }
+Classifier & Obama voters & Romney voters \\
+\hline
+DecTree & \textbf{0.71} (0.05) &  \textbf{0.71} (0.07) \\
+MaxEnt & \textbf{0.20} (.05) &  \textbf{.68} (.04) \\
+Naive & \textbf{0.70} (.06) &  \textbf{.68} (.05) \\
+\end{tabular}
+\caption{\textbf{Task 1}: Accuracy and StdDev}
+\end{centering}
+\end{table}
+
+\begin{table}[H]
+\begin{centering}
+\begin{tabular}{ l | l | l }
+Classifier & Obama Voters & Romney Voters \\
+\hline
+DecTree & \textbf{0.76} (0.08) &  \textbf{0.70} (.06) \\
+MaxEnt & \textbf{0.23} (0.04) &  \textbf{0.21} (0.05) \\
+Naive & \textbf{0.74} (0.05) &  \textbf{0.71} (0.09) \\
+\end{tabular}
+\caption{\textbf{Task 2}: Accuracy and StdDev}
+\end{centering}
+\end{table}
+
+\begin{table}[H]
+\begin{centering}
+\begin{tabular}{ l | l | l }
+Classifier & Obama Voters & Romney Voters \\
+\hline
+DecTree & \textbf{0.74} (0.07) &  \textbf{0.77} (0.05) \\
+MaxEnt & \textbf{0.22} (0.05) &  \textbf{0.26} (0.04) \\
+Naive & \textbf{0.70} (0.10) &  \textbf{0.71} (0.07) \\
+\end{tabular}
+\caption{\textbf{Task 3}: Accuracy and StdDev}
+\label{tab:task3boydstunlda}
+\end{centering}
+\end{table}
+
+
