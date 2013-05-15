@@ -5,6 +5,9 @@ cl2-lda
 
 ## Running (dependencies: numpy, scipy, sqlite3, Mallet)
 
+Mallet can be obtained [here](http://mallet.cs.umass.edu/download.php).
+The other dependencies can be installed with pip or by installing the [enthough python distribution](https://www.enthought.com/canopy-express/).
+
 1. Edit input_example.json to that the filepaths for the October 3rd debate and presidential debate corpus are correct for your computer.
 2. Preprocess the data:
     `python format.py debates input_example.json`
