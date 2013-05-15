@@ -1,8 +1,5 @@
 %!TEX root =  cl2-lda.tex
 
-The Decision Tree classifier performed by far the best on Task 1, with $69.5\%$  accuracy on reactions by Obama supporters and $71.9\%$ accuracy on reactions by Romney supporters. The MaxEnt and Naive Bayes classifiers performed poorly. On Task 2, all classifiers performed surprisingly poorly, with the best accuracy being $58.9\%$ using a Naive Bayes classifier. The best performance was on Task 3, on which all three classifiers scored in the low $80\%$ range. The MaxEnt and Naive Bayes classifiers scored the highest with $82.3\%$ and $81.3\%$ accuracy on reactions by Obama and Romney supporters, respectively.
-
-
 The highest-information gain features provide an interesting point of analysis. Task 1 involves predicting the overall volume of reactions based on the mixture of topics. The most useful features for this prediction tell us what topics users tended to respond to. For Obama supporters, these are "labor/employment/immigration," "education," and "health." For Romney supporters, they are "government operations," "macroeconomics," and "education."
 
 Task 1 is somewhat overgeneral because the total number of reactions does not include information about what the reactions are. Task 3 involves predicting specific types of reactions, "spin" and "dodge," which both involve deception. In Table ~\ref{tab:task3boydstun}, "candidate personal information" is a good predictor for both candidates. A reasonable conclusion of these results is that when a candidate tells a personal anecdote, users from both parties tend to react as if it is an attempt to "spin" or "dodge" the question at hand.
