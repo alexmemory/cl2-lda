@@ -8,7 +8,7 @@ To extract n-gram features from the transcripts of the turns, we began by splitt
 
 For our evaluation, we considered either unigrams or bigrams as features.  To determine the number of n-gram features to use to avoid overfitting, we varied their number while evaluating mean accuracy during repeated random sub-sampling validation.  To select which n-grams to include among the features, we selected the n-grams with the most frequent unigrams first.
 
-In Table~\ref{tab:task1unigrams} we see that on \textbf{Task 1} the decision tree performed best over all, while on \textbf{Task 2}, naive Bayes performed very well when predicting reactions of Obama voters but not for Romney voters, cf. Table~\ref{tab:task2unigrams}.  Finally, we see in~\ref{tab:task3unigrams} that on \textbf{Task 3}, maximum entropy performed best over all while naive bayes continued to struggle at predicting reactions of Romney voters.
+First we consider results with unigram features. In Table~\ref{tab:task1unigrams} we see that on \textbf{Task 1} the decision tree performed best over all, while on \textbf{Task 2}, naive Bayes performed very well when predicting reactions of Obama voters but not for Romney voters, cf. Table~\ref{tab:task2unigrams}.  And, we see in~\ref{tab:task3unigrams} that on \textbf{Task 3}, maximum entropy performed best over all while naive bayes continued to struggle at predicting reactions of Romney voters.
 
 \begin{table}[H]
 \begin{centering}
@@ -49,5 +49,49 @@ Naive & \textbf{0.81} (.11) &  \textbf{.49} (.23) \\
 \end{tabular}
 \caption{Task 3 (unigram features): Accuracy and StdDev}
 \label{tab:task3unigrams}
+\end{centering}
+\end{table}
+
+Bigram features consistently underperform the unigram features, since there were very few training examples, permitting over-fitting, and the models were not smoothed.  Table~\ref{tab:task1bigrams} reveals marginal performance on \textbf{Task 1}, but \textbf{Task 2} and \textbf{Task 3} performed worse, cf. Table~\ref{tab:task2bigrams} and Table~\ref{tab:task3bigrams}.
+
+\begin{table}[H]
+\begin{centering}
+\begin{tabular}{ l | l | l }
+Classifier & Obama voters & Romney voters \\
+\hline
+DecTree & \textbf{0.74} (0.12) &  \textbf{0.73} (0.12) \\
+MaxEnt & \textbf{0.74} (.09) &  \textbf{.73} (.10) \\
+Naive & \textbf{0.74} (.09) &  \textbf{.73} (.17) \\
+\end{tabular}
+\caption{Task 1 (bigram features): Accuracy and StdDev}
+\label{tab:task1bigrams}
+\end{centering}
+\end{table}
+
+\begin{table}[H]
+\begin{centering}
+\begin{tabular}{ l | l | l }
+Classifier & Obama voters & Romney voters \\
+\hline
+DecTree & \textbf{0.46} (0.18) &  \textbf{0.63} (0.13) \\
+MaxEnt & \textbf{0.54} (.11) &  \textbf{.63} (.17) \\
+Naive & \textbf{0.44} (.22) &  \textbf{.63} (.21) \\
+\end{tabular}
+\caption{Task 2 (bigram features): Accuracy and StdDev}
+\label{tab:task2bigrams}
+\end{centering}
+\end{table}
+
+\begin{table}[H]
+\begin{centering}
+\begin{tabular}{ l | l | l }
+Classifier & Obama voters & Romney voters \\
+\hline
+DecTree & \textbf{0.50} (0.09) &  \textbf{0.60} (0.19) \\
+MaxEnt & \textbf{0.50} (.24) &  \textbf{.40} (.22) \\
+Naive & \textbf{0.33} (.13) &  \textbf{.60} (.11) \\
+\end{tabular}
+\caption{Task 3 (bigram features): Accuracy and StdDev}
+\label{tab:task3bigrams}
 \end{centering}
 \end{table}
