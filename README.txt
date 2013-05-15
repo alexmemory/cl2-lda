@@ -47,3 +47,23 @@ $ python mallet.py
   ... 
 
 The output of mallet.py will be the results of 12-way classification, for each possible individual reaction.
+
+
+
+Classifying turns by N-Gram features - baseline_ngrams.py
+----------------------------------------------------------------------
+
+Dependencies: Python 2.7, NumPy 1.6.1, Pandas 0.10.1, NLTK 2.0.4
+
+    This has been tested with Enthought Python Distribution (EPD) Free 7.3-2. Other dependencies may
+    exist that are not satisfied if a different Python distribution is used to run this software.
+
+To run, do the following:
+
+$ python baseline_ngrams.py <path to reactions CSV file> <path to coded transcript CSV file> <unigram/bigram>
+
+Example:
+
+$ python baseline_ngrams.py data/reactions_oct3_4project.csv corpora/oct3_coded_transcript_sync.csv unigram
+
+The program will display the results (mean and std dev of accuracies) of the n-grams evaluation to the console.
