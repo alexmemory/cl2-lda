@@ -43,3 +43,6 @@ tmp.*
 mallet
 Wang
 slda_out
+slda_inf
+data_stage_three
+
